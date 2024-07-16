@@ -10,3 +10,6 @@ Remuneração
 Ao longo do projeto vamos adicionando mais colunas e extraindo mais informações
 
 Suponha que os arquivos que ele vai ler estão na mesma pasta que o arquivo main.py
+
+Requisitos iniciais:
+pip install openai pandas PyPDF2 openpyxl pyinstaller
