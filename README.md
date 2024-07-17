@@ -14,3 +14,8 @@ Suponha que os arquivos que ele vai ler estão na mesma pasta que o arquivo main
 Requisitos iniciais:
 pip install openai pandas PyPDF2 openpyxl langchain tiktoken
 pip install -U langchain-openai
+
+Otimizações:
+Quebrar o processo de extração em duas etapas:
+ - Primeiro pegar todas as informações
+ - Em seguida filtrar essas informações já filtradas na coluna
