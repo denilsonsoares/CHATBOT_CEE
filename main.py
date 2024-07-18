@@ -2,6 +2,7 @@ import os
 import openai
 import pandas as pd
 from PyPDF2 import PdfReader
+from docx import Document
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
@@ -22,13 +23,23 @@ def extract_text_from_pdf(file_path):
         text += page.extract_text()
     return text
 
-# Função para extrair texto de arquivos PDF e TXT
+# Função para extrair texto de arquivos .docx
+def extract_text_from_docx(file_path):
+    doc = Document(file_path)
+    full_text = []
+    for para in doc.paragraphs:
+        full_text.append(para.text)
+    return '\n'.join(full_text)
+
+# Função para extrair texto de arquivos PDF, TXT e DOCX
 def extract_text_from_file(file_path):
     if file_path.endswith('.pdf'):
         return extract_text_from_pdf(file_path)
     elif file_path.endswith('.txt'):
         with open(file_path, 'r', encoding='utf-8') as file:
             return file.read()
+    elif file_path.endswith('.docx'):
+        return extract_text_from_docx(file_path)
     else:
         return ''
 
@@ -54,7 +65,7 @@ def main():
 
     for file_name in os.listdir(folder_path):
         file_path = os.path.join(folder_path, file_name)
-        if file_path.endswith('.pdf') or file_path.endswith('.txt'):
+        if file_path.endswith('.pdf') or file_path.endswith('.txt') or file_path.endswith('.docx'):
             text = extract_text_from_file(file_path)
             if text:
                 job_info = extract_job_info(text)
