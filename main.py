@@ -35,18 +35,20 @@ def extract_text_from_file(file_path):
 # Função para extrair informações da vaga usando LangChain
 def extract_job_info(text):
     template = """
-    Extraia as seguintes informações do texto da vaga de estágio: Empresa, Vaga, Localidade, Requisitos, Remuneração.
-    Texto: {text}
-    Informações extraídas:
-    """
+        Extraia as seguintes informações do texto da vaga de estágio. Forneça respostas curtas e objetivas 
+        apenas com as palavras-chave de cada campo:
+        Empresa, Vaga, Localidade, Requisitos, Remuneração, Destinatários, Áreas de Atuação, Responsabilidades.
+        Texto: {text}
+        Informações extraídas:
+        """
     prompt = PromptTemplate(input_variables=["text"], template=template)
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo", openai_api_key=api_key)
+    llm = ChatOpenAI(model_name="gpt-4", openai_api_key=api_key)
     chain = LLMChain(prompt=prompt, llm=llm)
     result = chain.run(text)
     return result.strip()
 
 def main():
-    columns = ['Empresa', 'Vaga', 'Localidade', 'Requisitos', 'Remuneração']
+    columns = ['Empresa', 'Vaga', 'Localidade', 'Requisitos', 'Remuneração', 'Destinatários', 'Áreas de Atuação', 'Responsabilidades']
     data = []
     folder_path = './VAGAS'
 
@@ -57,7 +59,17 @@ def main():
             if text:
                 job_info = extract_job_info(text)
                 job_info_list = job_info.split('\n')
-                data.append([info.split(':')[1].strip() for info in job_info_list if ':' in info])
+                extracted_info = []
+                for info in columns:
+                    found = False
+                    for line in job_info_list:
+                        if line.startswith(info):
+                            extracted_info.append(line.split(':', 1)[1].strip())
+                            found = True
+                            break
+                    if not found:
+                        extracted_info.append('')
+                data.append(extracted_info)
 
     df = pd.DataFrame(data, columns=columns)
     df.to_excel('job_info.xlsx', index=False)
