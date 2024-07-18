@@ -1,0 +1,96 @@
+Estágio Short - Automation 2024
+
+BTG Pactual
+Remoto
+
+PRAZO
+
+01/10/2024
+
+SALÁRIO
+
+A combinar
+
+LOCAIS
+
+DESCRIÇÃO
+
+Por que trabalhar no BTG?
+Que tal ter a chance de ser dono do seu próprio negócio dentro de uma empresa sólida e com mais de 40 anos de história? No BTG valorizamos espírito empreendedor, autonomia, agilidade, foco no cliente, excelência e visão de longo prazo. Agimos com integridade, responsabilidade, simplicidade, inconformismo e dedicação.
+
+Meritocracia está no centro do nosso dia a dia. Temos um escritório open space e uma estrutura horizontal onde você vai conversar com os melhores profissionais de mercado e ter desafios reais e diários.
+
+
+
+Sobre a Área
+
+A área de Automation atua em diversas iniciativas internas do Banco, exercendo papel fundamental na transformação digital do banco. A área possui um importante papel dentro do BTG, possibilitando a escalabilidade de novos negócios e já existentes, por meio de soluções de automação modernas e disruptivas, gerando dados que auxiliam na gestão das áreas e dão insumo para a tomada de decisão gerencial.
+
+Nosso time é dividido em duas áreas, sendo elas: Discovery – que é responsável por identificar, especificar e priorizar as soluções. Além de atuar como intermediador entre os solicitantes e o time de desenvolvimento; e o Dev Team – que são responsáveis por estimar o esforço para se construir uma solução, além de avaliar a viabilidade técnica para executá-la, usando linguagens de programação modernas e ferramentas tecnológicas, tanto de mercado, quanto desenvolvidas internamente pelo time.
+
+
+
+Sobre o Programa de Short Job em Automation
+
+Nesse programa você vai ter a oportunidade de conhecer os bastidores do maior banco de investimentos da América Latina, entender como são operados e comercializados os diversos produtos oferecidos pelo BTG, e participar da construção de soluções que mudem o dia a dia de diversas áreas. O processo é o mesmo para quem quer se aplicar para Discovery e/ou Desenvolvimento!
+
+Nossos estagiários ficam no time em média de 2 a 4 meses, sempre acompanhado de um tutor para auxiliar em qualquer dúvida ou problema que venha a ter. E o melhor: você pode participar de qualquer lugar do Brasil!
+
+O processo seletivo possui as seguintes etapas:
+
+
+
+Inscrição;
+Dinâmica: Avançando no processo seletivo, você será convidado para uma etapa online para podermos nos conhecer melhor. Ao longo da dinâmica será realizado um case e/ou um desafio prático para avaliarmos suas habilidades!;
+Testes Técnicos.
+
+
+Vale lembrar que em nenhuma das fases existe resposta certa ou errada! O que vale aqui é sua determinação e capacidade de resolver problemas!
+
+
+
+No seu dia-a-dia você vai:
+
+Aprender a desenvolver automações que alavancam diversas áreas do banco;
+Construir telas de front-end em ReactJS e Flask;
+Programar back-end e APIs de serviços em Python;
+Entender como criar processos padronizados;
+Lidar com diversos tipos de produtos financeiros;
+Desenvolver as soluções que foram definidas, e garantir a qualidade da entrega;
+Prestar suporte quando alguma solução para de funcionar como deveria;
+Manter um relacionamento próximo com os usuários, e mantê-los informados sobre o a evolução e andamento das soluções;
+Negociar a prioridade das soluções levantadas;
+Fomentar a missão da área e promover a mudança de mindeset do banco;
+Documentar os processos e soluções que forem desenhadas;
+Acompanhar o time de Discovery no mapeamento de processos, e também sugerir soluções inovadoras;
+Desenvolver soluções de alto impacto, integrando diferentes tecnologias;
+Garantir a estabilidade e o funcionamento das soluções do time.
+
+
+O que buscamos em novos talentos:
+
+Curiosos:
+para aprender novas linguagens de programação;
+para entender os processos de ponta a ponta, e aprender como é o dia a dia de um Banco;
+para adquirir mais conhecimentos sobre produtos financeiros;
+no universo da tecnologia e capazes de reconhecer sua aplicabilidade no dia a dia.
+Apaixonados:
+por trabalhar em equipe e ter a vontade de espalhar seus conhecimentos;
+por tecnologia, mas que também amam conhecer e entender o business;
+por dados e capazes de enxergar como trabalhá-lo para auxiliar a tomada de decisão.
+Entusiastas:
+em quer entregar as melhores soluções, todos os dias;
+por tecnologia, principalmente Python (conhecer de serviços de cloud computing e VBA serão um diferencial);
+por quererem mudar processos que já não funcionam tão bem quanto no passado.
+
+
+E para isso precisamos que você:
+
+Esteja cursando regularmente um curso de formação superior (nível bacharel ou tecnólogo);
+Possua um computador com conexão à internet;
+Tenha disponibilidade de trabalhar no mínimo 2 meses conosco;
+Tenha disponibilidade para trabalhar presencialmente no escritório de São Paulo ou Rio de Janeiro em caso de efetivação;
+Tenha conhecimento em base lógica de programação.
+
+
+O BTG Pactual respeita a pluralidade de identidades e trabalha para promover uma cultura inclusiva. Não fazemos distinção de raça, cor, religião, identidade de gênero, orientação sexual, nacionalidade, deficiência ou idade em nenhuma etapa do processo seletivo, reforçando nosso compromisso com a diversidade.

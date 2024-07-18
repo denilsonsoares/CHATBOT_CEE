@@ -35,7 +35,7 @@ def extract_text_from_file(file_path):
 # Função para extrair informações da vaga usando LangChain
 def extract_job_info(text):
     template = """
-    Extraia as seguintes informações do texto da vaga de estágio: Empresa, Vaga, Tipo, Requisitos, Remuneração.
+    Extraia as seguintes informações do texto da vaga de estágio: Empresa, Vaga, Localidade, Requisitos, Remuneração.
     Texto: {text}
     Informações extraídas:
     """
@@ -46,7 +46,7 @@ def extract_job_info(text):
     return result.strip()
 
 def main():
-    columns = ['Empresa', 'Vaga', 'Tipo', 'Requisitos', 'Remuneração']
+    columns = ['Empresa', 'Vaga', 'Localidade', 'Requisitos', 'Remuneração']
     data = []
     folder_path = './VAGAS'
 
