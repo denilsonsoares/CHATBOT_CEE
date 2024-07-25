@@ -39,7 +39,7 @@ def extract_text_from_docx(file_path):
 # Função para extrair texto de imagens usando a API do Gemini
 def extract_text_from_image(file_path):
     img = Image.open(file_path)
-    model = genai.GenerativeModel('gemini-pro-vision')
+    model = genai.GenerativeModel('gemini-1.5-flash')
     response = model.generate_content(img)
     return response.text
 
