@@ -18,7 +18,7 @@ def get_api_key(filename):
 genai.configure(api_key=get_api_key('gemini_api_key.txt'))
 
 # Configuração da API do OpenAI
-openai_api_key = get_api_key('openai_api_key.txt')
+openai_api_key = get_api_key('openai_api_key2.txt')
 
 # Função para extrair texto de PDF
 def extract_text_from_pdf(file_path):
@@ -67,7 +67,7 @@ def extract_job_info(text):
         Informações extraídas:
         """
     prompt = PromptTemplate(input_variables=["text"], template=template)
-    llm = ChatOpenAI(model_name="gpt-4o-mini", openai_api_key=openai_api_key)
+    llm = ChatOpenAI(model_name="gpt-3.5-turbo", openai_api_key=openai_api_key)
     chain = LLMChain(prompt=prompt, llm=llm)
     result = chain.run(text)
     return result.strip()
