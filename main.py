@@ -9,20 +9,19 @@ from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 import time
-
+import tiktoken
 
 # Função para ler a chave da API do Gemini e do OpenAI do arquivo .txt
 def get_api_key(filename):
     with open(filename, 'r') as file:
         return file.read().strip()
 
-
 # Configuração da API do Gemini
 genai.configure(api_key=get_api_key('gemini_api_key.txt'))
 
 # Configuração da API do OpenAI
 openai_api_key = get_api_key('openai_api_key2.txt')
-
+openai.api_key = openai_api_key
 
 # Função para extrair texto de PDF
 def extract_text_from_pdf(file_path):
@@ -32,7 +31,6 @@ def extract_text_from_pdf(file_path):
         text += page.extract_text()
     return text
 
-
 # Função para extrair texto de arquivos .docx
 def extract_text_from_docx(file_path):
     doc = Document(file_path)
@@ -41,14 +39,12 @@ def extract_text_from_docx(file_path):
         full_text.append(para.text)
     return '\n'.join(full_text)
 
-
 # Função para extrair texto de imagens usando a API do Gemini
 def extract_text_from_image(file_path):
     img = Image.open(file_path)
     model = genai.GenerativeModel('gemini-1.5-flash')
     response = model.generate_content(img)
     return response.text
-
 
 # Função para extrair texto de arquivos PDF, TXT, DOCX e imagens
 def extract_text_from_file(file_path):
@@ -64,18 +60,11 @@ def extract_text_from_file(file_path):
     else:
         return ''
 
-
-# Função para contar tokens usando a API do OpenAI
+# Função para contar tokens usando a biblioteca tiktoken
 def count_tokens(text):
-    response = openai.Completion.create(
-        engine="davinci",
-        prompt=text,
-        max_tokens=1,  # Apenas para obter a contagem de tokens
-        temperature=0,
-        api_key=openai_api_key
-    )
-    return response['usage']['total_tokens']
-
+    encoding = tiktoken.encoding_for_model("gpt-3.5-turbo")
+    tokens = encoding.encode(text)
+    return len(tokens)
 
 # Função para extrair informações da vaga usando LangChain
 def extract_job_info(text):
@@ -91,7 +80,6 @@ def extract_job_info(text):
     chain = LLMChain(prompt=prompt, llm=llm)
     result = chain.run(text)
     return result.strip()
-
 
 def main():
     columns = ['Empresa', 'Vaga', 'Localidade', 'Requisitos', 'Remuneração', 'Destinatários', 'Áreas de Atuação',
@@ -138,7 +126,6 @@ def main():
     df = pd.DataFrame(data, columns=columns)
     df.to_excel('job_info.xlsx', index=False)
     print(f'Total de tokens usados: {total_tokens_used}')
-
 
 if __name__ == '__main__':
     main()
