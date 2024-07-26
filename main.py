@@ -8,17 +8,21 @@ import google.generativeai as genai
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
+import time
+
 
 # Função para ler a chave da API do Gemini e do OpenAI do arquivo .txt
 def get_api_key(filename):
     with open(filename, 'r') as file:
         return file.read().strip()
 
+
 # Configuração da API do Gemini
 genai.configure(api_key=get_api_key('gemini_api_key.txt'))
 
 # Configuração da API do OpenAI
 openai_api_key = get_api_key('openai_api_key2.txt')
+
 
 # Função para extrair texto de PDF
 def extract_text_from_pdf(file_path):
@@ -28,6 +32,7 @@ def extract_text_from_pdf(file_path):
         text += page.extract_text()
     return text
 
+
 # Função para extrair texto de arquivos .docx
 def extract_text_from_docx(file_path):
     doc = Document(file_path)
@@ -36,12 +41,14 @@ def extract_text_from_docx(file_path):
         full_text.append(para.text)
     return '\n'.join(full_text)
 
+
 # Função para extrair texto de imagens usando a API do Gemini
 def extract_text_from_image(file_path):
     img = Image.open(file_path)
     model = genai.GenerativeModel('gemini-1.5-flash')
     response = model.generate_content(img)
     return response.text
+
 
 # Função para extrair texto de arquivos PDF, TXT, DOCX e imagens
 def extract_text_from_file(file_path):
@@ -56,6 +63,19 @@ def extract_text_from_file(file_path):
         return extract_text_from_image(file_path)
     else:
         return ''
+
+
+# Função para contar tokens usando a API do OpenAI
+def count_tokens(text):
+    response = openai.Completion.create(
+        engine="davinci",
+        prompt=text,
+        max_tokens=1,  # Apenas para obter a contagem de tokens
+        temperature=0,
+        api_key=openai_api_key
+    )
+    return response['usage']['total_tokens']
+
 
 # Função para extrair informações da vaga usando LangChain
 def extract_job_info(text):
@@ -72,16 +92,33 @@ def extract_job_info(text):
     result = chain.run(text)
     return result.strip()
 
+
 def main():
-    columns = ['Empresa', 'Vaga', 'Localidade', 'Requisitos', 'Remuneração', 'Destinatários', 'Áreas de Atuação', 'Responsabilidades']
+    columns = ['Empresa', 'Vaga', 'Localidade', 'Requisitos', 'Remuneração', 'Destinatários', 'Áreas de Atuação',
+               'Responsabilidades']
     data = []
     folder_path = './VAGAS'
+    total_tokens_used = 0
+    token_limit_per_minute = 200000
+    token_limit_per_day = 2000000
+    start_time = time.time()
 
     for file_name in os.listdir(folder_path):
         file_path = os.path.join(folder_path, file_name)
         if file_path.endswith(('.pdf', '.txt', '.docx', '.png', '.jpg', '.jpeg')):
             text = extract_text_from_file(file_path)
             if text:
+                num_tokens = count_tokens(text)
+                if total_tokens_used + num_tokens > token_limit_per_day:
+                    print(f'Limite diário de tokens excedido ao processar {file_name}. Salvando dados parciais.')
+                    break
+
+                if total_tokens_used + num_tokens > token_limit_per_minute:
+                    elapsed_time = time.time() - start_time
+                    if elapsed_time < 60:
+                        time.sleep(60 - elapsed_time)
+                    start_time = time.time()
+
                 job_info = extract_job_info(text)
                 job_info_list = job_info.split('\n')
                 extracted_info = []
@@ -95,9 +132,13 @@ def main():
                     if not found:
                         extracted_info.append('')
                 data.append(extracted_info)
+                total_tokens_used += num_tokens
+                print(f'{file_name} processado com sucesso.')
 
     df = pd.DataFrame(data, columns=columns)
     df.to_excel('job_info.xlsx', index=False)
+    print(f'Total de tokens usados: {total_tokens_used}')
+
 
 if __name__ == '__main__':
     main()
