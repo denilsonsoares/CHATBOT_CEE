@@ -76,7 +76,7 @@ def extract_job_info(text):
         Informações extraídas:
         """
     prompt = PromptTemplate(input_variables=["text"], template=template)
-    llm = ChatOpenAI(model_name="gpt-4", openai_api_key=openai_api_key)
+    llm = ChatOpenAI(model_name="gpt-3.5-turbo", openai_api_key=openai_api_key)
     chain = LLMChain(prompt=prompt, llm=llm)
     result = chain.run(text)
     return result.strip()
@@ -85,7 +85,7 @@ def main():
     columns = ['Empresa', 'Vaga', 'Localidade', 'Requisitos', 'Remuneração', 'Destinatários', 'Áreas de Atuação',
                'Responsabilidades']
     data = []
-    folder_path = './VAGAS'
+    folder_path = './VAGAS_50'
     total_tokens_used = 0
     token_limit_per_minute = 200000
     token_limit_per_day = 2000000
@@ -124,7 +124,7 @@ def main():
                 print(f'{file_name} processado com sucesso.')
 
     df = pd.DataFrame(data, columns=columns)
-    df.to_excel('job_info.xlsx', index=False)
+    df.to_excel('job_info_gpt3.xlsx', index=False)
     print(f'Total de tokens usados: {total_tokens_used}')
 
 if __name__ == '__main__':

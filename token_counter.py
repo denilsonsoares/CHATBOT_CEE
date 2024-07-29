@@ -18,7 +18,7 @@ def count_tokens(text):
 
 # Função principal para contar tokens em todos os arquivos PDF em uma pasta
 def main():
-    folder_path = './VAGAS'
+    folder_path = './VAGAS_75'
     pdf_files = [f for f in os.listdir(folder_path) if f.endswith('.pdf')]
     total_tokens = 0
 
