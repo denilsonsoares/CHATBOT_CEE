@@ -1,0 +1,184 @@
+
+Pessoa Desenvolvedora BackEnd Java/Kotlin Especialista II (Engenharia de Crédito) (Produtos Digitais Financeiros)
+
+Grupo Boticário
+Remoto
+
+PRAZO
+
+30/09/2024
+
+SALÁRIO
+
+A combinar
+
+DESCRIÇÃO
+
+DESCRIÇÃO DA VAGA
+O que é o gb.tech?
+
+
+
+Somos o time de tecnologia do GB e nosso espírito inquieto nos faz estar sempre de olho nas tendências futuras. A tecnologia é fundamental para revolucionar toda a nossa jornada, da pesquisa e desenvolvimento de produtos até a venda final para nossos consumidores - e é através dela que estamos construindo o melhor e maior ecossistema de beleza para o mundo.
+
+
+
+Cada novo processo, lançamento e solução exigem eficiência, habilidade e inovação. Só assim é possível manter a velocidade e o dinamismo do nosso crescimento e entregar beleza em cada canto do Brasil e em mais de 15 países. E é isso que o time do gb.tech está fazendo no Grupo Boticário.
+
+
+
+Temos o compromisso em construir um ambiente cada vez mais diverso e inclusivo. Valorizamos a Diversidade e estamos comprometidos com a promoção da inclusão e equidade em nossos times.
+
+
+
+Como parte da nossa estratégia em prol da diversidade e inclusão, buscamos a representatividade da sociedade em nossos times. Por isso, temos vagas destinadas aos grupos minorizados priorizados em nossa estratégia: pessoas com deficiência, pessoas negras (pretas e pardas), mulheres (cis e trans), pessoas da comunidade LGBTQIA+ e pessoas 50+.
+
+
+
+Essa ação faz parte de uma estratégia ligada aos nossos compromissos e fortalecimento de nossa cultura equânime.
+
+Conheça mais sobre nossos compromissos em: https://www.umabelezadefuturo.com.br
+
+RESPONSABILIDADES E ATRIBUIÇÕES
+﻿O que é o nosso time de Desenvolvimento de Plataforma de Crédito?
+
+No time de Produtos Digitais Financeiros temos a nossa própria Fintech no qual representa uma estrutura financeira no GB. Como Pessoa Desenvolvedora Especialista II, você terá a oportunidade de apoiar no dia-a-dia e evolução de diversos produtos nas verticais de Crédito e Meios de Pagamento atendendo às necessidades dos franqueados, revendedores, fornecedores, distribuidores e consumidores finais, além de identificar oportunidades para expandir a utilização dos nossos serviços dentro da empresa. Nosso objetivo é oferecer os melhores produtos financeiros para o Grupo Boticário, transformando a realidade do mercado de beleza!.
+
+
+
+Como será seu dia-a-dia?
+
+Atuará como Especialista em um time multidisciplinar que tem como desafio prover a melhor experiência a todos integrantes do ecossistema do Grupo Boticário, responsável pelos produtos digitais voltados ao crédito;
+Liderará tecnicamente o desenvolvimento de soluções em nuvem, utilizando as melhores práticas e padrões da AWS;
+Projetará, implementará e manterá arquiteturas escaláveis e seguras na AWS, com foco em soluções baseadas em Kotlin e Java;
+Participará do desenho da arquitetura de solução e cenários de uso ajudando a construir as histórias da sprint;
+Participará das definições de novas features de produto;
+Desenvolverá e manter uma base de código de alta qualidade, seguindo as práticas recomendadas de desenvolvimento, como testes automatizados, integração contínua e entrega contínua (CI/CD);
+Investigará e resolverá problemas técnicos complexos relacionados ao desenvolvimento de soluções em nuvem AWS;
+Buscará se manter atualizado sobre as últimas tendências e tecnologias relacionadas ao desenvolvimento em nuvem, especialmente em relação à AWS e às linguagens Kotlin, Java, Python e NodeJS;
+Participará dos ritos da squad e dos chapters;
+Avaliará impactos, riscos e estimativa de esforços;
+Trabalhará em um ambiente colaborativo, que busca melhoria contínua de processos, produtos ou serviços e no qual práticas de pareamento, feedbacks e motivação para se desenvolver são comuns a todos os squads;
+Colaborará com equipes multifuncionais para definir requisitos técnicos, arquitetura de sistemas e melhores abordagens de desenvolvimento;
+Apoiará profissionais que precisem da sua experiência ou orientação;
+Contribuirá com os time de infraestrutura, segurança e arquitetura para determinar as melhores soluções para os problemas;
+Fornecerá orientação técnica e suporte à equipe, compartilhando conhecimento e melhores práticas;
+Ajudar na evolução técnica dos outros desenvolvedores.
+REQUISITOS E QUALIFICAÇÕES
+O que buscamos na Pessoa Especialista II?
+
+Experiência relevante: a pessoa Especialista deve ter uma vasta experiência em sua área de especialização. Deve ser capaz de demonstrar um histórico de projetos bem-sucedidos e de ter lidado com situações complexas e desafiadoras.
+Habilidades técnicas: a pessoa Especialista deve ter conhecimentos técnicos avançados em sua área de especialização, bem como habilidades em outras áreas relacionadas. Deve ser capaz de oferecer soluções técnicas de alta qualidade para problemas complexos.
+Liderança e colaboração: a pessoa Especialista deve ter habilidades de liderança e colaboração fortes. Deve ser capaz de liderar projetos e equipes, além de trabalhar bem em equipe e colaborar com outros membros da equipe e também gerar impacto para além de seu time.
+Resolução de problemas: a pessoa Especialista deve ser capaz de lidar com problemas complexos e desafiadores e encontrar soluções criativas e eficazes para eles, ainda que diante de situações que gerem limitações de recursos ou tempo.
+Comunicação: a pessoa Especialista deve ter excelentes habilidades de comunicação. Eles devem ser capazes de se comunicar claramente e efetivamente com colegas, clientes e outras partes interessadas.
+Mentalidade orientada a resultados: a pessoa Especialista deve ter uma mentalidade orientada a resultados e estar focada em atingir metas e objetivos específicos. Eles devem ser capazes de trabalhar com prazos apertados e gerenciar projetos de forma eficiente e eficaz.
+Deverá se manter constantemente atualizado com relação as tecnologias existentes no mercado.
+Ter mindset de Continuous Delivery, focado em entregar valor de negócio e ao usuário final;
+Ter criatividade, inovar, não ter medo de mudança;
+Ser Clean Coder;
+Prezar pela qualidade constante;
+Prezar pela evolução técnica do produto ou serviço.
+
+
+O que você precisa ter ou saber?
+
+Experiência com soluções cloud AWS;
+Conhecimento em Python, JavaScript/TypeScript(Node) e/ou Java/Kotlin;
+Interesse e conhecimento em estruturas de dados;
+Experiência com monitoração e logging;
+Conhecimento de Rest e orientação a eventos(Kafka);
+Experiência com testes unitários e de integração;
+Ponto de vista crítico quanto à performance e segurança;
+Visão de qualidade de software, evolução de sistemas, decomposição de problemas e abstração;
+Domínio do git ou outro sistema de controle de versão colaborativo;
+Conhecimento em CI / CD;
+Conhecimento em serverless framework;
+Vivência em times ágeis (Scrum, Kanban, etc);
+Familiaridade em banco de dados relacional e não relacional;
+Conhecimento em produtos financeiros voltados à créditos;
+Capacidade de conduzir root cause analysis em problemas de software;
+Experiência com testes de carga.
+INFORMAÇÕES ADICIONAIS
+O que oferecemos?
+
+
+
+Benefícios:
+
+Nos preocupamos com o bem-estar das nossas pessoas, por isso oferecemos benefícios flexíveis que permitem uma vida mais saudável e completa.
+
+
+
+Local de trabalho: O nosso jeito de trabalhar nunca para de evoluir, e depois de tantos aprendizados e novas formas de fazer acontecer nos últimos meses, estamos testando 3 modalidades de trabalho: remoto, híbrido ou presencial.
+
+
+
+Nesta vaga, a modalidade é 100% home office, com alguns encontros ao longo do ano. Prometemos que somente em caso de momentos incríveis de conexão e colaboração! Incrível né? Assim você pode trabalhar onde quiser e com quem quiser dentro do Brasil!
+
+
+
+E ainda tem mais, olha só os nossos benefícios:
+
+⏰Jornada de Trabalho com carga horária flexível e sustentável;
+
+🥘Para quem gosta de cozinhar a própria comida? Oferecemos Vale Alimentação, com um bônus no Natal;
+
+🍔Prefere pedir a comida em casa mesmo? Temos Vale Refeição;
+
+🐶Tem aquele Pet super fofo e quer ajuda? Temos a opção do Auxílio Pet;
+
+🚑Tá, mas e a sua saúde? Oferecemos Plano de Saúde (extensível aos dependentes legais), Plano Odontológico, Seguro de Vida e Previdência;
+
+🏋️‍♂️Sabe a vida fitness? Deixa com o Gympass;
+
+👧🧑E as crianças pequenas? Você pode optar pelo Auxílio Babá ou Auxílio Creche. Crianças de 04 meses a 02 anos, possuem Nutrição Infantil Complementar;
+
+👶Acreditamos que todos possuem o direito de uma Licença Parental Universal igualitária de 120 dias para mulheres e homens (cis e trans);
+
+🤑PLR: Bônus anual conforme metas.
+
+🤩 Além do Desconto de até 40% em nossos produtos. Agora sim viu vantagem, né?
+
+
+
+ Por que o Grupo Boticário?
+
+
+
+• Aqui as pessoas são protagonistas da sua jornada. Com autonomia e liberdade para criar e inovar, são capazes de encontrar soluções de alto impacto;
+
+• Temos espaço de sobra para criar e inovar, incentivando o espírito inquieto que nos caracteriza. Acreditamos em um ambiente profissional feito de trocas, pautado pela ética e responsabilidade, que inspire as pessoas a atingirem seu maior potencial para alcançarem resultados incríveis.
+
+• Somos um lugar para quem acredita que superar obstáculos faz parte da evolução. Faz parte da adrenalina do nosso dia a dia, porque só assim somos capazes de crescer e nos transformar.
+
+• Caso tenha dúvidas sobre como o Grupo Boticário trata os seus dados, acesse https://privacidade.grupoboticario.com.br/.
+
+ETAPAS DO PROCESSO
+Etapa 1: Cadastro
+Etapa 2: Triagem
+Etapa 3: Entrevista Recrutamento e Seleção
+Etapa 4: Entrevista com Liderança
+Etapa 5: Entrevista Interface
+Etapa 6: Carta Oferta
+Etapa 7: Contratação
+
+
+GRUPO BOTICÁRIO
+De uma pequena farmácia de manipulação a maior franquia de cosméticos do planeta.
+
+
+
+Somos um Grupo com 9 marcas próprias que está presente em mais de 50 países, com mais de 4.000 lojas físicas, líder de e-commerce de beleza no Brasil e mais de 17.000 colaboradores diretos.
+
+
+
+Temos um ecossistema próprio de beleza, que vai da indústria ao ponto de venda, da logística ao varejo, do laboratório ao coração das consumidoras e das nossas inovações até a palma da sua mão.
+
+
+
+Reinventamos a beleza por meio da tecnologia, diversidade, coletividade e sustentabilidade com: O Boticário, Eudora, Quem Disse, Berenice?, Vult, BeautyBox, Beleza na Web, O.U.i., Mooz, Fundação Grupo Boticário, Instituto Grupo Boticário, Casa Magalhães, GAVB, Dr. Jones, Truss e tô.que.tô.
+
+
+
+Vem fazer beleza com a gente!

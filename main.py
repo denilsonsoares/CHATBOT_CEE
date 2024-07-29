@@ -76,7 +76,7 @@ def extract_job_info(text):
         Informações extraídas:
         """
     prompt = PromptTemplate(input_variables=["text"], template=template)
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo", openai_api_key=openai_api_key)
+    llm = ChatOpenAI(model_name="gpt-4", openai_api_key=openai_api_key)
     chain = LLMChain(prompt=prompt, llm=llm)
     result = chain.run(text)
     return result.strip()
