@@ -71,7 +71,7 @@ def extract_job_info(text):
     template = """
         Extraia as seguintes informações do texto da vaga de estágio. Forneça respostas curtas e objetivas 
         apenas com as palavras-chave de cada campo:
-        Empresa, Vaga, Localidade, Requisitos, Remuneração, Destinatários, Áreas de Atuação, Responsabilidades.
+        Empresa, Vaga, Localidade, Requisitos, Remuneração, Carga Horária, Benefícios, Destinatários, Áreas de Atuação, Responsabilidades.
         Texto: {text}
         Informações extraídas:
         """
@@ -82,8 +82,7 @@ def extract_job_info(text):
     return result.strip()
 
 def main():
-    columns = ['Empresa', 'Vaga', 'Localidade', 'Requisitos', 'Remuneração', 'Destinatários', 'Áreas de Atuação',
-               'Responsabilidades']
+    columns = ['Empresa', 'Vaga', 'Localidade', 'Requisitos', 'Remuneração', 'Carga Horária', 'Benefícios', 'Destinatários', 'Áreas de Atuação', 'Responsabilidades', 'Nome do Arquivo']
     data = []
     folder_path = './VAGAS_50'
     total_tokens_used = 0
@@ -110,7 +109,7 @@ def main():
                 job_info = extract_job_info(text)
                 job_info_list = job_info.split('\n')
                 extracted_info = []
-                for info in columns:
+                for info in columns[:-1]:  # Ignorar 'Nome do Arquivo' na extração de dados
                     found = False
                     for line in job_info_list:
                         if line.startswith(info):
@@ -119,6 +118,7 @@ def main():
                             break
                     if not found:
                         extracted_info.append('')
+                extracted_info.append(file_name)  # Adicionar nome do arquivo
                 data.append(extracted_info)
                 total_tokens_used += num_tokens
                 print(f'{file_name} processado com sucesso.')
