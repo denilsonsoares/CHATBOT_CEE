@@ -2,7 +2,7 @@ import pandas as pd
 import re
 
 # Carregar a planilha de entrada
-input_file = 'job_info_gpt3.xlsx'
+input_file = 'job_info_gpt3_75.xlsx'
 df = pd.read_excel(input_file)
 
 # Carregar o arquivo de palavras-chave
@@ -113,5 +113,5 @@ df['Destinatários'] = df['Destinatários'].apply(simplify_destinatarios)
 df['Carga Horária'] = df['Carga Horária'].apply(simplify_carga_horaria)
 
 # Salvar o resultado em um novo arquivo
-output_file = 'simplified_job_info_gpt3.xlsx'
+output_file = 'simplified_job_info_gpt3_75.xlsx'
 df.to_excel(output_file, index=False)
