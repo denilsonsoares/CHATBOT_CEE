@@ -84,7 +84,7 @@ def extract_job_info(text):
 def main():
     columns = ['Empresa', 'Vaga', 'Localidade', 'Requisitos', 'Remuneração', 'Carga Horária', 'Benefícios', 'Destinatários', 'Áreas de Atuação', 'Responsabilidades', 'Nome do Arquivo']
     data = []
-    folder_path = './VAGAS_75'
+    folder_path = './VAGAS_125'
     total_tokens_used = 0
     token_limit_per_minute = 200000
     token_limit_per_day = 2000000
@@ -124,7 +124,7 @@ def main():
                 print(f'{file_name} processado com sucesso.')
 
     df = pd.DataFrame(data, columns=columns)
-    df.to_excel('job_info_gpt3_75.xlsx', index=False)
+    df.to_excel('job_info_gpt3_125.xlsx', index=False)
     print(f'Total de tokens usados: {total_tokens_used}')
 
 if __name__ == '__main__':
