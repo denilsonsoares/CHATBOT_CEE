@@ -2,7 +2,7 @@ import pandas as pd
 import re
 
 # Carregar a planilha de entrada
-input_file = 'job_info_gpt3_75.xlsx'
+input_file = 'job_info_gpt3.xlsx'
 df = pd.read_excel(input_file)
 
 # Carregar o arquivo de palavras-chave
@@ -14,7 +14,7 @@ keywords = {
     'Localidade': keywords_df['Localidade'].dropna().tolist(),
     'Requisitos': keywords_df['Requisitos'].dropna().tolist(),
     'Destinatários': keywords_df['Destinatários'].dropna().tolist(),
-    'Carga Horária': keywords_df['Carga Horária'].dropna().tolist()
+    'Categorias Carga Horária': keywords_df['Categorias Carga Horária'].dropna().tolist()
 }
 
 # Carregar mapeamento de substituição de palavras para os requisitos
@@ -24,6 +24,16 @@ if 'Substituicoes' in keywords_df:
     for item in substitutions:
         original, replacement = item.split(',')
         replacement_map[original.strip()] = replacement.strip()
+
+# Carregar categorias de carga horária
+carga_horaria_map = {}
+if 'Categorias Carga Horária' in keywords_df:
+    categorias = keywords_df['Categorias Carga Horária'].dropna().tolist()
+    for item in categorias:
+        parts = item.split(',')
+        main_category = parts[0].strip().lower()
+        for term in parts[1:]:
+            carga_horaria_map[term.strip().lower()] = main_category
 
 # Função para simplificar a localidade
 def simplify_localidade(localidade):
@@ -62,12 +72,17 @@ def simplify_destinatarios(destinatarios):
 
 # Função para simplificar a carga horária
 def simplify_carga_horaria(carga_horaria):
-    if pd.isna(carga_horaria) or carga_horaria.lower() in ['não mencionada', 'não mencionado', 'não informado', 'não informada']:
+    if pd.isna(carga_horaria) or carga_horaria.lower() in ['não mencionado', 'não mencionada', 'não informado',
+                                                           'não informada', 'não especificada']:
         return 'Não especificada'
-    for keyword in keywords['Carga Horária']:
-        if re.search(r'\b' + re.escape(keyword) + r'\b', carga_horaria, re.IGNORECASE):
-            return keyword
-    return carga_horaria
+
+    carga_horaria_lower = carga_horaria.lower()
+    for term, category in carga_horaria_map.items():
+        if re.search(r'\b' + re.escape(term) + r'\b', carga_horaria_lower):
+            return category
+
+    # Se nenhum termo específico foi encontrado, retornar 'Não especificada'
+    return 'Não especificada'
 
 # Função para simplificar a coluna de remuneração
 def simplify_remuneracao(remuneracao):
@@ -98,5 +113,5 @@ df['Destinatários'] = df['Destinatários'].apply(simplify_destinatarios)
 df['Carga Horária'] = df['Carga Horária'].apply(simplify_carga_horaria)
 
 # Salvar o resultado em um novo arquivo
-output_file = 'simplified_job_info_gpt3_75.xlsx'
+output_file = 'simplified_job_info_gpt3.xlsx'
 df.to_excel(output_file, index=False)
