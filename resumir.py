@@ -2,7 +2,7 @@ import pandas as pd
 import re
 
 # Carregar a planilha de entrada
-input_file = 'job_info_gpt3.xlsx'
+input_file = 'job_info_gpt3_75.xlsx'
 df = pd.read_excel(input_file)
 
 # Carregar o arquivo de palavras-chave
@@ -17,13 +17,21 @@ keywords = {
     'Carga Horária': keywords_df['Carga Horária'].dropna().tolist()
 }
 
+# Carregar mapeamento de substituição de palavras para os requisitos
+replacement_map = {}
+if 'Substituicoes' in keywords_df:
+    substitutions = keywords_df['Substituicoes'].dropna().tolist()
+    for item in substitutions:
+        original, replacement = item.split(',')
+        replacement_map[original.strip()] = replacement.strip()
+
 # Função para simplificar a localidade
 def simplify_localidade(localidade):
     if pd.isna(localidade) or localidade.lower() in ['não mencionado', 'não mencionada', 'não informado',
                                                      'não informada', 'não especificado', 'não especificada', '']:
         return 'Não especificada'
     for keyword in keywords['Localidade']:
-        if keyword.lower() in localidade.lower():
+        if re.search(r'\b' + re.escape(keyword) + r'\b', localidade, re.IGNORECASE):
             return keyword
     return localidade
 
@@ -31,11 +39,14 @@ def simplify_localidade(localidade):
 def simplify_requisitos(requisitos):
     if pd.isna(requisitos):
         return 'Não especificado'
-    simplified = []
+    simplified = set()  # Usar set para evitar duplicatas
     for keyword in keywords['Requisitos']:
-        if keyword.lower() in requisitos.lower():
-            simplified.append(keyword)
-    return ', '.join(simplified)
+        if re.search(r'\b' + re.escape(keyword) + r'\b', requisitos, re.IGNORECASE):
+            simplified.add(keyword)
+    for original, replacement in replacement_map.items():
+        if re.search(r'\b' + re.escape(original) + r'\b', requisitos, re.IGNORECASE):
+            simplified.add(replacement)
+    return ', '.join(sorted(simplified))  # Ordenar a lista e juntar os elementos
 
 # Função para simplificar os destinatários
 def simplify_destinatarios(destinatarios):
@@ -43,18 +54,18 @@ def simplify_destinatarios(destinatarios):
         return ''
     if not isinstance(destinatarios, str):
         return 'Não mencionado'
-    simplified = []
+    simplified = set()
     for keyword in keywords['Destinatários']:
-        if keyword.lower() in destinatarios.lower():
-            simplified.append(keyword)
-    return ', '.join(simplified)
+        if re.search(r'\b' + re.escape(keyword) + r'\b', destinatarios, re.IGNORECASE):
+            simplified.add(keyword)
+    return ', '.join(sorted(simplified))
 
 # Função para simplificar a carga horária
 def simplify_carga_horaria(carga_horaria):
     if pd.isna(carga_horaria) or carga_horaria.lower() in ['não mencionada', 'não mencionado', 'não informado', 'não informada']:
         return 'Não especificada'
     for keyword in keywords['Carga Horária']:
-        if keyword.lower() in carga_horaria.lower():
+        if re.search(r'\b' + re.escape(keyword) + r'\b', carga_horaria, re.IGNORECASE):
             return keyword
     return carga_horaria
 
@@ -87,5 +98,5 @@ df['Destinatários'] = df['Destinatários'].apply(simplify_destinatarios)
 df['Carga Horária'] = df['Carga Horária'].apply(simplify_carga_horaria)
 
 # Salvar o resultado em um novo arquivo
-output_file = 'simplified_job_info_gpt3.xlsx'
+output_file = 'simplified_job_info_gpt3_75.xlsx'
 df.to_excel(output_file, index=False)
