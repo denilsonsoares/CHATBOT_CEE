@@ -2,28 +2,40 @@ import pandas as pd
 import re
 
 # Carregar a planilha de entrada
-input_file = 'job_info_gpt3_125.xlsx'
+input_file = 'job_info_gpt3_50.xlsx'
 df = pd.read_excel(input_file)
 
 # Carregar o arquivo de palavras-chave
 keywords_file = 'keywords.xlsx'
 keywords_df = pd.read_excel(keywords_file)
-
+print(keywords_df.columns)
 # Converter as colunas do DataFrame em listas
 keywords = {
     'Localidade': keywords_df['Localidade'].dropna().tolist(),
     'Requisitos': keywords_df['Requisitos'].dropna().tolist(),
     'Destinatários': keywords_df['Destinatários'].dropna().tolist(),
-    'Categorias Carga Horária': keywords_df['Categorias Carga Horária'].dropna().tolist()
+    'Categorias Carga Horária': keywords_df['Categorias Carga Horária'].dropna().tolist(),
+    'Benefícios':keywords_df['Subs_Benefícios'].dropna().tolist()
 }
 
 # Carregar mapeamento de substituição de palavras para os requisitos
-replacement_map = {}
+requisitos_map = {}
 if 'Substituicoes' in keywords_df:
     substitutions = keywords_df['Substituicoes'].dropna().tolist()
     for item in substitutions:
         original, replacement = item.split(',')
-        replacement_map[original.strip()] = replacement.strip()
+        requisitos_map[original.strip()] = replacement.strip()
+
+#Carregar substituições de Benefícios
+benefícios_map={}
+if 'Subs_Benefícios' in keywords_df:
+    bene_substitutions=keywords_df['Subs_Benefícios'].dropna().tolist()
+    for item in bene_substitutions:
+        parts_bene=item.split(',')
+        replacement_bene=parts_bene[0].strip().lower()
+        for term in parts_bene[1:]:
+            benefícios_map[term.strip().lower()]=replacement_bene
+
 
 # Carregar categorias de carga horária
 carga_horaria_map = {}
@@ -53,7 +65,7 @@ def simplify_requisitos(requisitos):
     for keyword in keywords['Requisitos']:
         if re.search(r'\b' + re.escape(keyword) + r'\b', requisitos, re.IGNORECASE):
             simplified.add(keyword)
-    for original, replacement in replacement_map.items():
+    for original, replacement in requisitos_map.items():
         if re.search(r'\b' + re.escape(original) + r'\b', requisitos, re.IGNORECASE):
             simplified.add(replacement)
     return ', '.join(sorted(simplified))  # Ordenar a lista e juntar os elementos
@@ -105,13 +117,32 @@ def simplify_remuneracao(remuneracao):
 
     return 'A combinar'
 
+
+def simplify_benefícios(benefícios):
+    if pd.isna(benefícios):
+        return 'Não especificado'
+    simplified=set()
+    for keyword in keywords['Benefícios']:
+        if re.search(r'\b'+re.escape(keyword)+r'\b', benefícios, re.IGNORECASE):
+            simplified.add(keyword)
+    for original,replacement in benefícios_map.items():
+        if re.search(r'\b'+re.escape(original)+r'\b',benefícios,re.IGNORECASE):
+            simplified.add(replacement)
+
+    return ', '.join(sorted(simplified))
+
+
+
+
+
 # Aplicar simplificações
 df['Localidade'] = df['Localidade'].apply(simplify_localidade)
 df['Requisitos'] = df['Requisitos'].apply(simplify_requisitos)
 df['Remuneração'] = df['Remuneração'].apply(simplify_remuneracao)
 df['Destinatários'] = df['Destinatários'].apply(simplify_destinatarios)
 df['Carga Horária'] = df['Carga Horária'].apply(simplify_carga_horaria)
+df['Benefícios']=df['Benefícios'].apply(simplify_benefícios)
 
 # Salvar o resultado em um novo arquivo
-output_file = 'simplified_job_info_gpt3_125.xlsx'
+output_file = 'simplified_job_info_gpt3_50_att.xlsx'
 df.to_excel(output_file, index=False)
