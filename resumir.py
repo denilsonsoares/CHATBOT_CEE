@@ -8,16 +8,15 @@ df = pd.read_excel(input_file)
 # Carregar o arquivo de palavras-chave
 keywords_file = 'keywords.xlsx'
 keywords_df = pd.read_excel(keywords_file)
-print(keywords_df.columns)
 # Converter as colunas do DataFrame em listas
 keywords = {
     'Localidade': keywords_df['Localidade'].dropna().tolist(),
     'Requisitos': keywords_df['Requisitos'].dropna().tolist(),
     'Destinatários': keywords_df['Destinatários'].dropna().tolist(),
     'Categorias Carga Horária': keywords_df['Categorias Carga Horária'].dropna().tolist(),
-    'Benefícios':keywords_df['Subs_Benefícios'].dropna().tolist()
+    'Benefícios': keywords_df['Subs_Benefícios'].dropna().tolist(),
+    'Area': keywords_df['Subs_Areas'].dropna().tolist()
 }
-
 # Carregar mapeamento de substituição de palavras para os requisitos
 requisitos_map = {}
 if 'Substituicoes' in keywords_df:
@@ -26,27 +25,27 @@ if 'Substituicoes' in keywords_df:
         original, replacement = item.split(',')
         requisitos_map[original.strip()] = replacement.strip()
 
-#Carregar substituições de Benefícios
-benefícios_map={}
-if 'Subs_Benefícios' in keywords_df:
-    bene_substitutions=keywords_df['Subs_Benefícios'].dropna().tolist()
-    for item in bene_substitutions:
-        parts_bene=item.split(',')
-        replacement_bene=parts_bene[0].strip().lower()
-        for term in parts_bene[1:]:
-            benefícios_map[term.strip().lower()]=replacement_bene
+#Função que carrega o mapeamento de substituição de palavras para dada coluna
+def load_keys(map,column):
 
-
-# Carregar categorias de carga horária
-carga_horaria_map = {}
-if 'Categorias Carga Horária' in keywords_df:
-    categorias = keywords_df['Categorias Carga Horária'].dropna().tolist()
-    for item in categorias:
-        parts = item.split(',')
-        main_category = parts[0].strip().lower()
+    substitutions=column.dropna().tolist()
+    for item in substitutions:
+        parts=item.split(',')
+        key=parts[0].strip()
         for term in parts[1:]:
-            carga_horaria_map[term.strip().lower()] = main_category
+            map[term.strip().lower()]=key
 
+    return map
+#Criação dos dicionários de Benefícios, Carga Horária, Areas de Atuação e Setores
+benefícios_map={}
+carga_horaria_map = {}
+areas_map={}
+setor_map={}
+#Carregando substituições de Benefícios, Carga Horária e Areas de Atuação
+benefícios_map = load_keys(benefícios_map,keywords_df['Subs_Benefícios'])
+carga_horaria_map=load_keys(carga_horaria_map,keywords_df['Categorias Carga Horária'])
+areas_map=load_keys(areas_map,keywords_df['Subs_Areas'])
+setor_map=load_keys(setor_map,keywords_df['Setores'])
 # Função para simplificar a localidade
 def simplify_localidade(localidade):
     if pd.isna(localidade) or localidade.lower() in ['não mencionado', 'não mencionada', 'não informado',
@@ -117,22 +116,16 @@ def simplify_remuneracao(remuneracao):
 
     return 'A combinar'
 
-
-def simplify_benefícios(benefícios):
-    if pd.isna(benefícios):
+#Função que simplifica a coluna
+def simplify_column(value,map):
+    if pd.isna(value):
         return 'Não especificado'
     simplified=set()
-    for keyword in keywords['Benefícios']:
-        if re.search(r'\b'+re.escape(keyword)+r'\b', benefícios, re.IGNORECASE):
-            simplified.add(keyword)
-    for original,replacement in benefícios_map.items():
-        if re.search(r'\b'+re.escape(original)+r'\b',benefícios,re.IGNORECASE):
+    for original,replacement in map.items():
+        if re.search(r'\b'+re.escape(original)+r'\b',value,re.IGNORECASE):
             simplified.add(replacement)
 
     return ', '.join(sorted(simplified))
-
-
-
 
 
 # Aplicar simplificações
@@ -141,8 +134,9 @@ df['Requisitos'] = df['Requisitos'].apply(simplify_requisitos)
 df['Remuneração'] = df['Remuneração'].apply(simplify_remuneracao)
 df['Destinatários'] = df['Destinatários'].apply(simplify_destinatarios)
 df['Carga Horária'] = df['Carga Horária'].apply(simplify_carga_horaria)
-df['Benefícios']=df['Benefícios'].apply(simplify_benefícios)
-
+df['Benefícios']=df['Benefícios'].apply(lambda x: simplify_column(x,benefícios_map))
+df['Áreas de Atuação']=df['Áreas de Atuação'].apply(lambda x: simplify_column(x,areas_map))
+df['Setor']=df['Áreas de Atuação'].apply(lambda x:simplify_column(x,setor_map))
 # Salvar o resultado em um novo arquivo
-output_file = 'simplified_job_info_gpt3_50_att.xlsx'
+output_file = 'simplified_job_info_gpt3_50_at.xlsx'
 df.to_excel(output_file, index=False)
