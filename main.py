@@ -71,7 +71,7 @@ def extract_job_info(text):
     template = """
         Extraia as seguintes informações do texto da vaga de estágio. Forneça respostas curtas e objetivas 
         apenas com as palavras-chave de cada campo:
-        Empresa, Vaga, Localidade, Requisitos, Remuneração, Carga Horária, Benefícios, Destinatários, Áreas de Atuação, Responsabilidades.
+        Empresa, Vaga, Localidade, Requisitos, Remuneração, Carga Horária, Benefícios, Curso, Semestre/Previsão de Formatura, Áreas de Atuação, Responsabilidades.
         Texto: {text}
         Informações extraídas:
         """
@@ -82,7 +82,7 @@ def extract_job_info(text):
     return result.strip()
 
 def main():
-    columns = ['Empresa', 'Vaga', 'Localidade', 'Requisitos', 'Remuneração', 'Carga Horária', 'Benefícios', 'Destinatários', 'Áreas de Atuação', 'Responsabilidades', 'Nome do Arquivo']
+    columns = ['Empresa', 'Vaga', 'Localidade', 'Requisitos', 'Remuneração', 'Carga Horária', 'Benefícios', 'Curso', 'Semestre/Previsão de Formatura', 'Áreas de Atuação', 'Responsabilidades', 'Nome do Arquivo']
     data = []
     folder_path = './VAGAS_125'
     total_tokens_used = 0
