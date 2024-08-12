@@ -55,8 +55,8 @@ if opcao == "Visualização":
             st.subheader("Tabela de Dados")
             st.dataframe(df_visualizacao)
 
-        elif sub_opcao == "Gráficos Genéricos":
-            st.subheader("Gráficos")
+        elif sub_opcao == "Gráficos":
+            st.subheader("Gráficos Genéricos")
             coluna_grafico = st.selectbox("Selecione a coluna para visualizar o gráfico:", df_visualizacao.columns)
             if df_visualizacao[coluna_grafico].dtype == 'object':
                 contagem = df_visualizacao[coluna_grafico].str.split(',').explode().str.strip().value_counts()
