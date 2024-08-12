@@ -79,6 +79,18 @@ def count_tokens_in_folder(folder_path):
             total_tokens += count_tokens(text)
     return total_tokens
 
+
+# Função para calcular o custo com base nos tokens e no modelo
+def calculate_cost(total_tokens, model_name):
+    if model_name == "gpt-3.5-turbo":
+        cost_per_1000_tokens = 0.002
+    elif model_name == "gemini-1.5-flash":
+        cost_per_1000_tokens = 0.003  # valor hipotético
+    else:
+        raise ValueError("Modelo não suportado")
+
+    return (total_tokens / 1000) * cost_per_1000_tokens
+
 # Função para extrair informações da vaga usando LangChain
 def extract_job_info(text, openai_api_key, model_name="gpt-3.5-turbo"):
     template = """
@@ -135,7 +147,7 @@ def process_files_and_save(folder_path, openai_api_key, model_name="gpt-3.5-turb
                 total_tokens_used += num_tokens
 
     df = pd.DataFrame(data, columns=columns)
-    output_filename = f"job_info__modelo_{len(os.listdir(folder_path))}.xlsx"
+    output_filename = f"job_info_{model_name}_{len(os.listdir(folder_path))}.xlsx"
     output_path = os.path.join('dados_brutos', output_filename)
     df.to_excel(output_path, index=False)
     return total_tokens_used, output_filename
