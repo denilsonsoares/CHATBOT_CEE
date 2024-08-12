@@ -4,7 +4,7 @@ import pandas as pd
 df = pd.read_excel('keywords.xlsx', engine='openpyxl')
 
 # Palavra-chave principal
-palavra_principal = "Marketing"
+palavra_principal = "Consultoria"
 
 # Substituir NaN por string vazia para evitar erros na busca
 df['Subs_Areas'] = df['Subs_Areas'].fillna('')
