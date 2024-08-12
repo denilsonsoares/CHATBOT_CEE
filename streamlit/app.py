@@ -1,8 +1,7 @@
-# app.py
 import streamlit as st
 import pandas as pd
 import os
-import openai  # Importar a biblioteca openai
+import openai
 from utils import configure_genai, configure_openai, count_tokens_in_folder, process_files_and_save, calculate_cost
 
 # Configurar a página do Streamlit
@@ -18,32 +17,52 @@ st.title("Visualização e Extração de Dados de Vagas de Emprego")
 # Barra Lateral para Navegação
 st.sidebar.title("Navegação")
 opcao = st.sidebar.selectbox("Escolha a aba:",
-                             ["Áreas de Atuação", "Setores", "Remuneração", "Requisitos", "Extração de Dados"])
+                             ["Visualização", "Extração de Dados"])
 
-# Carregar os dados da planilha
-df = pd.read_excel('dados/simplified_job_info_gpt3_125.xlsx', engine='openpyxl')
+# Aba de Visualização de Dados
+if opcao == "Visualização":
+    st.header("Visualização de Dados")
 
-# Aba de Gráficos
-if opcao in ["Áreas de Atuação", "Setores", "Remuneração", "Requisitos"]:
-    if opcao == "Áreas de Atuação":
-        st.header("Distribuição por Áreas de Atuação")
-        areas_de_atuacao = df['Áreas de Atuação'].str.split(',').explode().str.strip().value_counts()
-        st.bar_chart(areas_de_atuacao)
+    # Seletor de arquivo na pasta dados_simplificados
+    arquivo_selecionado = st.selectbox("Selecione o arquivo .xlsx para visualizar:", os.listdir('dados_simplificados'))
 
-    elif opcao == "Setores":
-        st.header("Distribuição por Setores")
-        setores = df['Setor'].str.split(',').explode().str.strip().value_counts()
-        st.bar_chart(setores)
+    if arquivo_selecionado:
+        df_visualizacao = pd.read_excel(os.path.join('dados_simplificados', arquivo_selecionado), engine='openpyxl')
 
-    elif opcao == "Remuneração":
-        st.header("Distribuição de Remuneração")
-        remuneracao = df['Remuneração'].str.replace('R\$', '').str.replace(',', '').astype(float)
-        st.hist_chart(remuneracao)
+        sub_opcao = st.selectbox("Escolha a sub-aba:",
+                                 ["Áreas de Atuação", "Setores", "Requisitos", "Resumo", "Tabela", "Gráficos"])
 
-    elif opcao == "Requisitos":
-        st.header("Requisitos mais Comuns")
-        requisitos = df['Requisitos'].str.split(',').explode().str.strip().value_counts().head(20)
-        st.bar_chart(requisitos)
+        if sub_opcao == "Áreas de Atuação":
+            st.header("Distribuição por Áreas de Atuação")
+            areas_de_atuacao = df_visualizacao['Áreas de Atuação'].str.split(',').explode().str.strip().value_counts()
+            st.bar_chart(areas_de_atuacao)
+
+        elif sub_opcao == "Setores":
+            st.header("Distribuição por Setores")
+            setores = df_visualizacao['Setor'].str.split(',').explode().str.strip().value_counts()
+            st.bar_chart(setores)
+
+        elif sub_opcao == "Requisitos":
+            st.header("Requisitos mais Comuns")
+            requisitos = df_visualizacao['Requisitos'].str.split(',').explode().str.strip().value_counts().head(20)
+            st.bar_chart(requisitos)
+
+        elif sub_opcao == "Resumo":
+            st.subheader("Resumo dos Dados")
+            st.write(df_visualizacao.describe())
+
+        elif sub_opcao == "Tabela":
+            st.subheader("Tabela de Dados")
+            st.dataframe(df_visualizacao)
+
+        elif sub_opcao == "Gráficos Genéricos":
+            st.subheader("Gráficos")
+            coluna_grafico = st.selectbox("Selecione a coluna para visualizar o gráfico:", df_visualizacao.columns)
+            if df_visualizacao[coluna_grafico].dtype == 'object':
+                contagem = df_visualizacao[coluna_grafico].str.split(',').explode().str.strip().value_counts()
+                st.bar_chart(contagem)
+            else:
+                st.line_chart(df_visualizacao[coluna_grafico])
 
 # Aba de Extração de Dados
 elif opcao == "Extração de Dados":
@@ -68,7 +87,6 @@ elif opcao == "Extração de Dados":
                                                                           openai.api_key, modelo_selecionado)
         st.write(f"Total de tokens usados: {total_tokens_usados}")
         st.write(f"Arquivo gerado: {nome_arquivo_gerado}")
-
 
 # Rodapé da aplicação
 st.sidebar.text("Aplicação de Visualização e Extração de Vagas de Emprego")
