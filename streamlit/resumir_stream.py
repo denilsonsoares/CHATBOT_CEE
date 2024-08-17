@@ -1,12 +1,13 @@
 import pandas as pd
 import re
+import os
+import io
 def simplify(input_file):
     # Carregar a planilha de entrada
-    input_file = 'job_info_gpt3_125.xlsx'  # Nome da nova planilha gerada
     df = pd.read_excel(input_file)
 
     # Carregar o arquivo de palavras-chave
-    keywords_file = 'keywords.xlsx'
+    keywords_file = 'keywords_stream.xlsx'
     keywords_df = pd.read_excel(keywords_file)
 
     # Converter as colunas do DataFrame em listas
@@ -132,5 +133,6 @@ def simplify(input_file):
     df['Setor'] = df['Áreas de Atuação'].apply(lambda x: simplify_column(x, setor_map))
 
     # Salvar o resultado em um novo arquivo
-    output_file = 'Dados_simplificados'
+    input_name,_=os.path.splitext(input_file)
+    output_file = f'{input_name}_simplificado.xlsx'
     return df.to_excel(output_file, index=False)

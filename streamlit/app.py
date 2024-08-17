@@ -1,9 +1,11 @@
+import sys
 import streamlit as st
 import pandas as pd
 import os
 import openai
 from utils import configure_genai, configure_openai, count_tokens_in_folder, process_files_and_save, calculate_cost
-
+from resumir_stream import simplify
+from add_keywords_stream import new_keywords
 # Configurar a página do Streamlit
 st.set_page_config(
     page_title="Visualização de Dados de Vagas de Emprego",
@@ -17,7 +19,7 @@ st.title("Visualização e Extração de Dados de Vagas de Emprego")
 # Barra Lateral para Navegação
 st.sidebar.title("Navegação")
 opcao = st.sidebar.selectbox("Escolha a aba:",
-                             ["Visualização", "Extração de Dados"])
+                             ["Visualização", "Extração de Dados",'Simplificar Dados','Adicionar palavras-chave'])
 
 # Aba de Visualização de Dados
 if opcao == "Visualização":
@@ -87,6 +89,41 @@ elif opcao == "Extração de Dados":
                                                                           openai.api_key, modelo_selecionado)
         st.write(f"Total de tokens usados: {total_tokens_usados}")
         st.write(f"Arquivo gerado: {nome_arquivo_gerado}")
+
+elif opcao=='Simplificar Dados':
+    st.header('Simplificação de Dados')
+    #Espaço para dar o upload no arquivo
+    uploaded_file=st.file_uploader('Escolha um arquivo para simplificar',type='xlsx')
+
+    if uploaded_file:
+        temp_file=os.path.join('dados_simplificados',uploaded_file.name)
+        #Criação de arquivo temporário para armazenar a uploaded_file
+        with open(temp_file,'wb') as f:
+            f.write(uploaded_file.getvalue())
+        #Aplicação da função simplify no arquivo temporário e remoção do arquivo temporário
+        file_simplified=simplify(temp_file)
+        os.remove(temp_file)
+    st.write('Simplificação feita!')
+
+elif opcao=='Adicionar palavras-chave':
+    #Lendo o keywords e transformando num DataFrame
+    keywords_df=pd.read_excel('keywords_streamlit.xlsx',engine='openpyxl')
+    #Exibindo o DataFrame
+    st.dataframe(keywords_df)
+    st.header('Adicionar palavras-chave')
+    #Escolha da Coluna que o usuário vai alterar
+    column=st.selectbox('Digite a coluna que quer adicionar palavra-chave:',keywords_df.columns)
+    #Palavras a serem adicionadas
+    new_key=st.text_input('Digite as novas palavras-chave:')
+    #Ao pressionar o botão, um arquivo é criado com as palavras-chave
+    if st.button('Adicionar palavras'):
+        with open('new_keys_file.txt','w') as f:
+            f.write(new_key)
+        #As palavras sao adicionadas com a função new_keywords e o arquivo é atualizado
+        keywords_df=new_keywords(column,'new_keys_file.txt',keywords_df)
+        keywords_df.to_excel('keywords_streamlit.xlsx',index=False,engine='openpyxl')
+
+
 
 # Rodapé da aplicação
 st.sidebar.text("Aplicação de Visualização e Extração de Vagas de Emprego")
