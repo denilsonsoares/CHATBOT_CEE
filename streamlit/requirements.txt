@@ -1,0 +1,17 @@
+openai
+pandas
+pypdf2
+python-docx
+pillow
+google-generativeai
+langchain
+langchain-openai
+tiktoken
+transformers
+sys
+streamlit
+os
+openai
+plotly.express
+openpyxl
+re
