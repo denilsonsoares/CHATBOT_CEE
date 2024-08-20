@@ -8,10 +8,6 @@ langchain
 langchain-openai
 tiktoken
 transformers
-sys
 streamlit
-os
-openai
-plotly.express
+plotly
 openpyxl
-re
