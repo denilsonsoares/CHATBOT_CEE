@@ -6,3 +6,8 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+# ignore idea folder
+.idea/
+# ignore python cache
+__pycache__/

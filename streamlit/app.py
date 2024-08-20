@@ -64,16 +64,61 @@ if opcao == "Visualização":
             fig_setor = px.bar(setores, x='Setor', y='Contagem')
             st.plotly_chart(fig_setor)
 
+
         elif sub_opcao == "Requisitos":
-            st.header("Requisitos mais Comuns")
-            requisitos = to_df(df_visualizacao['Requisitos'], 'Requisito')
-            requisitos_comum = requisitos.head(10)
-            fig_comum = px.pie(requisitos_comum, names='Requisito', values='Contagem')
-            st.plotly_chart(fig_comum)
-            st.header('Requisitos menos comuns')
-            requisitos_raro = requisitos.tail(10)
-            fig_raro = px.pie(requisitos_raro, names='Requisito', values='Contagem')
-            st.plotly_chart(fig_raro)
+
+            df_req_exploded = df_visualizacao.assign(Requisitos=df_visualizacao['Requisitos'].str.split(', ')).explode('Requisitos')
+            requisito_count = df_req_exploded['Requisitos'].value_counts().reset_index()
+            requisito_count.columns = ['Requisitos', 'Contagem']
+
+            # adiciona um filtro de requisitos
+            filtro = st.multiselect("Remover Requisitos da Análise", df_req_exploded['Requisitos'].unique())
+
+            # remove os requisitos selecionados
+            df_req_exploded = df_req_exploded[~df_req_exploded['Requisitos'].isin(filtro)]
+            st.header("Requisitos por localidade")
+
+            # adiciona input para o usuário escolher o número de requisitos a serem exibidos
+            n_req = st.number_input("Número de Requisitos a serem exibidos", min_value=1, max_value=100, value=30)
+
+            # Ordenar o df_req_exploded baseado na frequência dos requisitos
+            df_req_exploded = df_req_exploded.merge(requisito_count, on='Requisitos').sort_values(by='Contagem', ascending=False)
+            top_x_requisitos = df_req_exploded.groupby('Requisitos').head(n_req)
+            top_x_requisitos_unicos = df_req_exploded['Requisitos'].value_counts().head(n_req).index
+            df_req_exploded = df_req_exploded[df_req_exploded['Requisitos'].isin(top_x_requisitos_unicos)]
+
+            df_req_exploded_arch = df_req_exploded.copy()
+
+            comparacao = st.selectbox("Comparar por:", df_req_exploded.columns.drop('Requisitos'))
+            if comparacao:
+                lista_comparacao = st.selectbox("Comparar como lista:", df_req_exploded.columns.drop(['Requisitos', comparacao]))
+            
+            # pega apenas a comparação principal, caso seja lista
+            df_req_exploded[comparacao] = df_req_exploded[comparacao].str.split(',').str[0].str.strip()
+
+            # Contando as ocorrências de cada Requisito por Variavel de comparacao e adicionando a lista concatenada
+            df_grouped = df_req_exploded.groupby(['Requisitos', comparacao]).agg(
+                    Contagem=('Requisitos', 'size'),
+                    ListaConcatenada=(lista_comparacao, lambda x: ', '.join(x.dropna().astype(str)))
+                ).reset_index()
+
+            # Criando o gráfico de barras empilhadas
+            fig = px.bar(df_grouped, 
+                        x='Requisitos', 
+                        y='Contagem', 
+                        color=comparacao, 
+                        title="Contagem de Requisitos por " + comparacao,
+                        labels={'Contagem':'Número de Vagas'},
+                        barmode='stack',
+                        hover_data="ListaConcatenada"
+                        )
+            
+            fig.update_layout(barmode='stack', xaxis={'categoryorder':'total descending'})
+            st.plotly_chart(fig)
+
+            st.dataframe(df_grouped)
+
+            st.dataframe(df_req_exploded_arch)
 
         elif sub_opcao == "Resumo":
             st.subheader("Resumo dos Dados")
