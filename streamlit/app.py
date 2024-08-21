@@ -181,15 +181,26 @@ elif opcao == "Extração de Dados":
 elif opcao == 'Simplificar Dados':
     st.header('Simplificação de Dados')
 
-    uploaded_file = st.file_uploader('Escolha um arquivo para simplificar', type='xlsx')
+    # Seletor de arquivo na pasta dados_brutos
+    dados_brutos_dir = os.path.join(base_dir, 'dados_brutos')
+    arquivos_dados_brutos = os.listdir(dados_brutos_dir)
 
-    if uploaded_file:
-        temp_file = os.path.join(base_dir, 'dados_simplificados', uploaded_file.name)
-        with open(temp_file, 'wb') as f:
-            f.write(uploaded_file.getvalue())
-        file_simplified = simplify(temp_file)
-        os.remove(temp_file)
-        st.write('Simplificação feita!')
+    if arquivos_dados_brutos:
+        arquivo_selecionado = st.selectbox("Selecione o arquivo para simplificar:", arquivos_dados_brutos)
+
+        if st.button("Simplificar Dados"):
+            caminho_arquivo = os.path.join(dados_brutos_dir, arquivo_selecionado)
+            df_simplificado = simplify(caminho_arquivo)
+
+            # Salvar o arquivo simplificado na pasta dados_simplificados
+            dados_simplificados_dir = os.path.join(base_dir, 'dados_simplificados')
+            nome_arquivo_simplificado = f"{os.path.splitext(arquivo_selecionado)[0]}_simplificado.xlsx"
+            caminho_arquivo_simplificado = os.path.join(dados_simplificados_dir, nome_arquivo_simplificado)
+            df_simplificado.to_excel(caminho_arquivo_simplificado, index=False, engine='openpyxl')
+
+            st.success(f"Arquivo simplificado salvo em: {caminho_arquivo_simplificado}")
+    else:
+        st.write("Nenhum arquivo encontrado na pasta 'dados_brutos'.")
 
 elif opcao == 'Adicionar palavras-chave':
     keywords_df = pd.read_excel(os.path.join(base_dir, 'keywords_streamlit.xlsx'), engine='openpyxl')
