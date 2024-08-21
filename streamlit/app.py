@@ -15,11 +15,10 @@ st.set_page_config(
     layout="wide",
 )
 
-# Adicionando estilo CSS personalizado
 st.markdown("""
     <style>
     /* Cor da barra lateral de navegação */
-    .css-1d391kg, .css-1d391kg:hover {
+    [data-testid="stSidebar"] {
         background-color: #d23237;
     }
 
@@ -35,12 +34,13 @@ st.markdown("""
     }
 
     /* Cor do texto e elementos na barra lateral */
-    .css-1d391kg, .css-1d391kg * {
+    [data-testid="stSidebar"] * {
         color: white;
     }
 
     </style>
     """, unsafe_allow_html=True)
+
 
 # Diretório base do script
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -119,7 +119,7 @@ if opcao == "Visualização":
             comparacao = st.selectbox("Comparar por:", df_req_exploded.columns.drop('Requisitos'))
             if comparacao:
                 lista_comparacao = st.selectbox("Comparar como lista:", df_req_exploded.columns.drop(['Requisitos', comparacao]))
-            
+
             # pega apenas a comparação principal, caso seja lista
             df_req_exploded[comparacao] = df_req_exploded[comparacao].str.split(',').str[0].str.strip()
 
@@ -130,16 +130,16 @@ if opcao == "Visualização":
                 ).reset_index()
 
             # Criando o gráfico de barras empilhadas
-            fig = px.bar(df_grouped, 
-                        x='Requisitos', 
-                        y='Contagem', 
-                        color=comparacao, 
+            fig = px.bar(df_grouped,
+                        x='Requisitos',
+                        y='Contagem',
+                        color=comparacao,
                         title="Contagem de Requisitos por " + comparacao,
                         labels={'Contagem':'Número de Vagas'},
                         barmode='stack',
                         hover_data="ListaConcatenada"
                         )
-            
+
             fig.update_layout(barmode='stack', xaxis={'categoryorder':'total descending'})
             st.plotly_chart(fig)
 
