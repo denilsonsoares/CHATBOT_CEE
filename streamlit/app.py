@@ -199,7 +199,7 @@ elif opcao == "Extração de Dados":
 
     if st.button("Extrair Dados"):
         configure_genai(os.path.join(base_dir, 'gemini_api_key.txt'))
-        configure_openai(os.path.join(base_dir, 'openai_api_key2.txt'))
+        configure_openai(os.path.join(base_dir, 'openai_api_key.txt'))
         total_tokens_usados, nome_arquivo_gerado = process_files_and_save(os.path.join(vagas_dir, pasta_selecionada),
                                                                           openai.api_key, modelo_selecionado)
         st.write(f"Total de tokens usados: {total_tokens_usados}")
