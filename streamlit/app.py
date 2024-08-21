@@ -15,6 +15,33 @@ st.set_page_config(
     layout="wide",
 )
 
+# Adicionando estilo CSS personalizado
+st.markdown("""
+    <style>
+    /* Cor da barra lateral de navegação */
+    .css-1d391kg, .css-1d391kg:hover {
+        background-color: #d23237;
+    }
+
+    /* Cor dos botões */
+    .stButton>button {
+        background-color: #d23237;
+        color: white;
+    }
+
+    .stButton>button:hover {
+        background-color: #b8282e;
+        color: white;
+    }
+
+    /* Cor do texto e elementos na barra lateral */
+    .css-1d391kg, .css-1d391kg * {
+        color: white;
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
+
 # Diretório base do script
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
