@@ -67,6 +67,10 @@ def simplify(input_file):
         for original, replacement in requisitos_map.items():
             if re.search(r'\b' + re.escape(original) + r'\b', requisitos, re.IGNORECASE):
                 simplified.add(replacement)
+        # Remover "Formado" se "Universitário" estiver presente
+        if "Universitário" in simplified and "Formado" in simplified:
+            simplified.discard("Formado")
+
         return ', '.join(sorted(simplified))  # Ordenar a lista e juntar os elementos
 
     # Função para simplificar o curso
