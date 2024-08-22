@@ -70,7 +70,7 @@ if opcao == "Visualização":
         df_visualizacao = pd.read_excel(os.path.join(dados_simplificados_dir, arquivo_selecionado), engine='openpyxl')
 
         sub_opcao = st.selectbox("Escolha a sub-aba:",
-                                 ["Áreas de Atuação", "Setores", "Requisitos", "Resumo", "Tabela", "Gráficos",
+                                 ["Áreas de Atuação", "Setores", "Requisitos", "Resumo", "Tabela", "Gráficos de Contagem",
                                   "Benefícios", "Empresas"])
 
         if sub_opcao == "Áreas de Atuação":
@@ -156,7 +156,7 @@ if opcao == "Visualização":
             st.dataframe(df_visualizacao)
 
 
-        elif sub_opcao == "Gráficos":
+        elif sub_opcao == "Gráficos de Contagem":
 
             st.subheader("Gráficos de Contagem")
 
