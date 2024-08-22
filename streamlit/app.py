@@ -155,14 +155,33 @@ if opcao == "Visualização":
             st.subheader("Tabela de Dados")
             st.dataframe(df_visualizacao)
 
+
         elif sub_opcao == "Gráficos":
-            st.subheader("Gráficos Genéricos")
-            coluna_grafico = st.selectbox("Selecione a coluna para visualizar o gráfico:", df_visualizacao.columns)
+
+            st.subheader("Gráficos de Contagem")
+
+            # Lista de colunas a serem excluídas
+
+            colunas_excluidas = ['Vaga', 'Remuneração', 'Carga Horária', 'Semestre/Previsão de Formatura', 'Responsabilidades', 'Nome do Arquivo']  # Substitua com os nomes das colunas que deseja excluir
+
+            # Filtrando as colunas disponíveis para o usuário
+
+            colunas_disponiveis = [col for col in df_visualizacao.columns if col not in colunas_excluidas]
+
+            # Seleção da coluna para visualização
+
+            coluna_grafico = st.selectbox("Selecione a coluna para visualizar o gráfico:", colunas_disponiveis)
+
             if df_visualizacao[coluna_grafico].dtype == 'object':
+
                 contagem = df_visualizacao[coluna_grafico].str.split(',').explode().str.strip().value_counts()
+
                 st.bar_chart(contagem)
+
             else:
+
                 st.line_chart(df_visualizacao[coluna_grafico])
+
 
         elif sub_opcao == 'Benefícios':
             st.subheader('Benefícios mais comuns')
